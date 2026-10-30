@@ -30,7 +30,9 @@ services:
       - key: PUBLIC_APP_URL
         sync: false
       - key: MAIL_ENABLED
-        value: "false"
+        # Set false for initial setup; enable in Render after adding RESEND_API_KEY.
+        # Keep this dashboard-managed so Blueprint syncs preserve the setting.
+        sync: false
       - key: MAIL_PROVIDER
         value: resend
       - key: MAIL_FROM

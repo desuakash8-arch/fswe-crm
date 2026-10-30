@@ -87,6 +87,7 @@ Supply these values when prompted:
 | `DB_USERNAME` | Aiven database username |
 | `DB_PASSWORD` | Aiven database password |
 | `PUBLIC_APP_URL` | Exact stable Vercel origin, e.g. `https://YOUR-FRONTEND.vercel.app`, without a trailing slash |
+| `MAIL_ENABLED` | `false` until the Resend key and demo recipient are configured |
 
 The Blueprint sets `SPRING_PROFILES_ACTIVE=prod,cloud`, creates a random `JWT_SECRET`, selects the Asia/Kolkata timezone and uses `/api/health` for health checks. Render supplies `PORT`; the application now reads it. Do not put MySQL on Render's temporary filesystem. Database records live in Aiven.
 
@@ -101,7 +102,7 @@ BOOTSTRAP_ADMIN_PASSWORD=<choose a private password of 10–72 characters>
 
 Save and deploy. Flyway creates the schema and the bootstrap creates one Admin with a hashed password only when no users exist. After successful login, set `BOOTSTRAP_ADMIN_ENABLED=false` and delete `BOOTSTRAP_ADMIN_PASSWORD`. Existing accounts are never reset by this setup. Create companies, Managers and Sales users from the CRM's existing screens.
 
-The Blueprint starts with mail disabled. This lets you verify database/login setup before configuring the email provider. Keep the generated `JWT_SECRET` stable across deployments; rotating it signs everyone out.
+Keep mail disabled during initial setup so you can verify the database and login before configuring the email provider. `MAIL_ENABLED` is dashboard-managed (`sync: false`), so later Blueprint syncs preserve your setting. Keep the generated `JWT_SECRET` stable across deployments; rotating it signs everyone out.
 
 ## 5. Connect the two public URLs
 
@@ -128,7 +129,9 @@ RAZORPAY_KEY_SECRET=<your private test key secret>
 RAZORPAY_WEBHOOK_SECRET=<a separate private webhook signing secret>
 ```
 
-After adding the key, change the `MAIL_ENABLED` value in `render.yaml` from `"false"` to `"true"`, commit and push. This keeps the Blueprint consistent with the service instead of a later Blueprint sync switching mail off. Keep the recipient override because customer addresses in this project are examples. Mail still says `[LOCAL TEST]` to identify redirected demonstration messages, even when hosted online. The local SMTP configuration remains available when running on the laptop.
+After adding the key, set `MAIL_ENABLED=true` in **Render → fswe-crm-api → Environment** and choose **Save and deploy**. Do not put provider secrets in GitHub or Vercel. The Blueprint uses `sync: false` for `MAIL_ENABLED`, so subsequent syncs do not overwrite the value you choose in Render. Existing services retain their current value until you change it in the dashboard. Keep the recipient override because customer addresses in this project are examples. Mail still says `[LOCAL TEST]` to identify redirected demonstration messages, even when hosted online. The local SMTP configuration remains available when running on the laptop.
+
+Once Render is Live, refresh the CRM **Payments** page. The missing-Razorpay-keys and email-disabled messages should disappear. This confirms the settings are present; provider authentication and delivery still need the checkout and inbox tests below. Test notification email with a new interaction after enabling mail: actions saved while mail was disabled are not queued retroactively.
 
 In Razorpay **Test mode**, enable automatic capture and register this webhook:
 
