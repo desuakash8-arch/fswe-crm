@@ -1,0 +1,26 @@
+node_modules/
+backups/
+**/test-results/
+**/playwright-report/
+.env.production
+*.log
+
+# Deployment credentials, local exports, and generated files
+.env
+.env.*
+!.env.example
+**/application-local.properties
+**/target/
+**/dist/
+.vercel/
+.render/
+*.sql
+!**/src/main/resources/db/migration/*.sql
+*.p12
+*.jks
+*.pem
+
+# Local troubleshooting reports
+fswe/crmbackend/startup-error.txt
+fswe/crmbackend/startup-log.txt
+fswe/crmfrontend/audit-dependencies.json

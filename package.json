@@ -1,0 +1,17 @@
+{
+  "name": "fswe-crm",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix fswe/crmfrontend run dev",
+    "build": "npm --prefix fswe/crmfrontend run build",
+    "lint": "npm --prefix fswe/crmfrontend run lint",
+    "backend": "cd fswe/crmbackend && mvnw.cmd spring-boot:run",
+    "test:backend": "cd fswe/crmbackend && mvnw.cmd test",
+    "test:e2e": "node scripts/run-e2e.mjs",
+    "backup:db": "node scripts/database.mjs backup --local",
+    "verify": "npm run lint && npm run build && npm run test:backend && npm run test:e2e"
+  },
+  "dependencies": {
+    "react": "^19.3.0"
+  }
+}

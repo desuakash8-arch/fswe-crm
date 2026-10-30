@@ -1,0 +1,41 @@
+# Deploy from the repository root as a Render Blueprint.
+# Add aiven-ca.pem under the service's Secret Files before its first good start.
+services:
+  - type: web
+    name: fswe-crm-api
+    runtime: docker
+    plan: free
+    region: singapore
+    branch: main
+    rootDir: fswe/crmbackend
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    autoDeployTrigger: checksPass
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod,cloud
+      - key: TZ
+        value: Asia/Kolkata
+      - key: DB_URL
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_SSL_CA
+        value: /etc/secrets/aiven-ca.pem
+      - key: JWT_SECRET
+        generateValue: true
+      - key: PUBLIC_APP_URL
+        sync: false
+      - key: MAIL_ENABLED
+        value: "false"
+      - key: MAIL_PROVIDER
+        value: resend
+      - key: MAIL_FROM
+        value: onboarding@resend.dev
+      - key: MAIL_RECIPIENT_OVERRIDE
+        value: desuakash8@gmail.com
+      - key: BOOTSTRAP_ADMIN_ENABLED
+        value: "false"

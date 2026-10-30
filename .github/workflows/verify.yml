@@ -1,0 +1,27 @@
+name: Verify CRM
+on: [push, pull_request]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: fswe/crmfrontend/package-lock.json
+      - run: chmod +x fswe/crmbackend/mvnw
+      - run: npm --prefix fswe/crmfrontend ci
+      - run: npm run lint && npm run build
+      - run: ./mvnw verify
+        working-directory: fswe/crmbackend
+      - run: npx playwright install --with-deps chromium
+        working-directory: fswe/crmfrontend
+      - run: node scripts/run-e2e.mjs
+        env:
+          PLAYWRIGHT_CHANNEL: chromium

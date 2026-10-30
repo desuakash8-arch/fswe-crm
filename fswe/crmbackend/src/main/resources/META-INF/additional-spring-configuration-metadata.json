@@ -1,0 +1,100 @@
+{
+  "properties": [
+    {
+      "name": "app.mail.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Enable outgoing notification email.",
+      "defaultValue": false
+    },
+    {
+      "name": "app.mail.from",
+      "type": "java.lang.String",
+      "description": "Sender email address."
+    },
+    {
+      "name": "app.mail.recipient-override",
+      "type": "java.lang.String",
+      "description": "Demo recipient override; leave blank only when delivering to real recipients."
+    },
+    {
+      "name": "app.jobs.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Enable background email and reminder jobs.",
+      "defaultValue": true
+    },
+    {
+      "name": "app.public-url",
+      "type": "java.lang.String",
+      "description": "Public frontend URL used in account links."
+    },
+    {
+      "name": "app.cors.origins",
+      "type": "java.lang.String",
+      "description": "Comma-separated allowed frontend origins."
+    },
+    {
+      "name": "app.deal-health.inactive-days",
+      "type": "java.lang.Integer",
+      "description": "Days without activity before a deal needs attention.",
+      "defaultValue": 7
+    },
+    {
+      "name": "app.deal-health.overdue-risk-days",
+      "type": "java.lang.Integer",
+      "description": "Days overdue before a follow-up is at risk.",
+      "defaultValue": 3
+    },
+    {
+      "name": "razorpay.key.id",
+      "type": "java.lang.String",
+      "description": "Razorpay test API key ID; use RAZORPAY_KEY_ID in local configuration."
+    },
+    {
+      "name": "razorpay.key.secret",
+      "type": "java.lang.String",
+      "description": "Razorpay test secret; use RAZORPAY_KEY_SECRET in local configuration."
+    },
+    {
+      "name": "razorpay.webhook.secret",
+      "type": "java.lang.String",
+      "description": "Optional Razorpay webhook signing secret."
+    },
+    {
+      "name": "app.jwt.secret",
+      "type": "java.lang.String",
+      "description": "JWT signing secret supplied by the private JWT_SECRET environment or local setting."
+    },
+    {
+      "defaultValue": "smtp",
+      "type": "java.lang.String",
+      "description": "Email transport: smtp for local Gmail, or resend for HTTPS hosting.",
+      "name": "app.mail.provider"
+    },
+    {
+      "type": "java.lang.String",
+      "description": "Private Resend API key, supplied through RESEND_API_KEY.",
+      "name": "app.mail.resend-api-key"
+    },
+    {
+      "defaultValue": false,
+      "type": "java.lang.Boolean",
+      "description": "Create the first administrator only when there are no users.",
+      "name": "app.bootstrap.enabled"
+    },
+    {
+      "type": "java.lang.String",
+      "description": "Name of the first administrator.",
+      "name": "app.bootstrap.name"
+    },
+    {
+      "type": "java.lang.String",
+      "description": "Email of the first administrator.",
+      "name": "app.bootstrap.email"
+    },
+    {
+      "type": "java.lang.String",
+      "description": "Private first-run administrator password; remove after setup.",
+      "name": "app.bootstrap.password"
+    }
+  ]
+}
