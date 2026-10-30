@@ -16,6 +16,7 @@ import {
   Moon,
   Menu,
   CreditCard,
+  Bot,
 } from "lucide-react";
 
 import {
@@ -31,6 +32,8 @@ function Layout() {
   const location = useLocation();
   const navigate = useNavigate();
   const user = getCurrentUser();
+  const customerContext = location.pathname.match(/^\/customers\/(\d+)$/);
+  const assistantPath = customerContext ? `/assistant?mode=CUSTOMER_SUMMARY&customerId=${customerContext[1]}` : "/assistant";
 
   const [sidebarOpen, setSidebarOpen] = useState(
     () => window.matchMedia("(min-width: 901px)").matches
@@ -123,6 +126,7 @@ function Layout() {
 
     {path:"/reports",label:"Reports",icon:LayoutDashboard},
     {path:"/payments",label:"Payments",icon:CreditCard},
+    {path:"/assistant",label:"AI Assistant",icon:Bot},
     {path:"/pipeline",label:"Pipeline",icon:BriefcaseBusiness},
     {path:"/data",label:"Import / export",icon:Building2},
     {path:"/account",label:"Account",icon:UserCog},
@@ -350,6 +354,8 @@ if (user?.role === "ADMIN" || user?.role === "MANAGER") {
         </div>
         <Outlet />
       </main>
+
+      {location.pathname!=="/assistant"&&<Link className="assistant-launcher" to={assistantPath} aria-label="Open AI assistant"><Bot size={22}/><span>Ask AI</span></Link>}
 
     </div>
   );

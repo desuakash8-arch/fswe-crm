@@ -1,6 +1,17 @@
 {
   "properties": [
     {
+      "name": "app.ai.groq-api-key",
+      "type": "java.lang.String",
+      "description": "Private Groq API key, supplied through GROQ_API_KEY. Never expose it in frontend variables."
+    },
+    {
+      "name": "app.ai.model",
+      "type": "java.lang.String",
+      "defaultValue": "openai/gpt-oss-20b",
+      "description": "Groq model supporting strict JSON schema output."
+    },
+    {
       "name": "app.mail.enabled",
       "type": "java.lang.Boolean",
       "description": "Enable outgoing notification email.",

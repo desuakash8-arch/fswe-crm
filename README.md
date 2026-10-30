@@ -41,6 +41,14 @@ Email is enabled on this machine through `application-local.properties`. Local t
 
 Public registration is disabled. Existing Admins/Managers create accounts through Users. Managers create Sales users for their own company. Sales users can use the assignment lookup endpoint without receiving user-management access. Records are scoped to Sales ownership and Manager company.
 
+## AI Assistant
+
+The **AI Assistant** page provides daily priorities, customer summaries, explanations of the existing deal-health results, and editable email drafts. It uses only records the signed-in user can access and includes links back to its CRM sources. Drafts can be edited and copied; the assistant does not send emails or change records.
+
+For local use, set `app.ai.groq-api-key=YOUR_PRIVATE_GROQ_KEY` in the ignored `fswe/crmbackend/application-local.properties` file, then restart the backend. Alternatively, leave the `${GROQ_API_KEY:}` placeholder and set `GROQ_API_KEY` in the backend process environment. Open `http://127.0.0.1:5173/assistant` after signing in. Render has its own environment: add `GROQ_API_KEY` there and redeploy. Never put the key in frontend variables or commit it to Git. The default Groq model is `openai/gpt-oss-20b`; see [deployment setup](DEPLOYMENT.md) for details.
+
+Each question sends a bounded, permission-filtered snapshot of the relevant CRM records to Groq. Automated tests use an isolated test provider and do not call Groq. A real API key is required to verify live AI responses.
+
 ## Verify
 
 From the project root:

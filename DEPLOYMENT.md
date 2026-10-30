@@ -141,7 +141,17 @@ https://YOUR-BACKEND.onrender.com/api/public/payments/webhook
 
 Use the same webhook secret and subscribe to `payment.captured`, `payment.failed`, `payment.authorized` and `order.paid`. Create a won deal/invoice and use **Email payment link**. Verify that the message arrives in your inbox, the link opens the public `/pay` page without CRM login, and a Razorpay test payment becomes Paid. The backend verifies payment with Razorpay; no real money is charged. Free-instance cold starts can delay webhook processing, so **Check payment status** remains available.
 
-## 7. How future GitHub updates redeploy
+## 7. Groq AI assistant setup
+
+The **AI Assistant** page and **Ask AI** shortcut support daily priorities, customer summaries, deal-health explanations, and editable email drafts. Add `GROQ_API_KEY` privately in **Render → fswe-crm-api → Environment**, then **Save and deploy**. The default model is `openai/gpt-oss-20b` served by Groq; an OpenAI key is not used. Optionally set `GROQ_MODEL` to another Groq model that supports strict JSON schema output, such as `openai/gpt-oss-120b`. For the laptop, set `app.ai.groq-api-key` in the ignored backend `application-local.properties` file. Neither key belongs in Vercel or GitHub. See [Groq API keys](https://console.groq.com/keys) and [supported structured-output models](https://console.groq.com/docs/structured-outputs).
+
+Without a key, the page explains that AI setup is pending; it does not simulate AI answers. Automated tests use a test-only provider and never call Groq. After saving a real key, verify all four topics on the deployed app, including source links and an edited/copied email draft.
+
+Each question sends a limited snapshot of the selected records to Groq, after applying the same Admin, Manager, and Sales access checks as the rest of the CRM. Names, deal amounts, clipped notes and relevant task dates can be included. Passwords, tokens, API keys, contact email/phone fields and payment links are excluded from the snapshot. Do not put credentials into customer notes or questions. Raw prompts, provider responses, and conversations are not stored or logged by the assistant; the browser keeps only the current page conversation in memory. Source links are built by the backend from permitted records, not by the model. Suggestions still require human review.
+
+The assistant cannot send mail, alter records, run SQL, browse URLs, or make payments. Drafting works independently of Resend. Daily priorities show bounded samples with counts, not an exhaustive report. Email drafts optionally focus on one selected deal. Requests are limited to six per user per minute and three simultaneous requests per backend instance; Groq's account limits also apply. Provider errors are shown without revealing secrets. Live inference needs a valid Groq key and available quota; check the Groq console if authorization or quota errors appear.
+
+## 8. How future GitHub updates redeploy
 
 The normal update path is:
 

@@ -1,4 +1,5 @@
 import DealHealth from "./pages/DealHealth";
+import Assistant from "./pages/Assistant";
 import Payments from "./pages/Payments";
 import CustomerPayment from "./pages/CustomerPayment";
 import Activity from "./pages/Activity";
@@ -50,6 +51,7 @@ function App() {
           {/* ================= LAYOUT ================= */}
 
           <Route element={<Layout />}>
+            <Route path="/assistant" element={<Assistant/>}/>
             <Route path="/payments" element={<Payments/>}/>
 
             {/* Normal authenticated pages */}

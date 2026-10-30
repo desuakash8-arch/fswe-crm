@@ -43,7 +43,7 @@ export default function DealHealth() {
     <Link className="health-back" to="/deals"><ArrowLeft size={16}/>Back to deals</Link>
     <header className="page-header-modern"><div><span className="page-eyebrow">Sales Management</span>
       <div className="customer-title-row"><Activity className="customer-title-icon" size={28}/><div><h1>Deal health</h1><p>{deal?.title??"Review this opportunity's next steps."}</p></div></div>
-    </div><div className="header-actions"><button className="secondary-btn" onClick={refresh}><RefreshCw size={15}/>Refresh</button><Link to="/pipeline">Pipeline board</Link></div></header>
+    </div><div className="header-actions"><button className="secondary-btn" onClick={refresh}><RefreshCw size={15}/>Refresh</button><Link to={`/assistant?mode=DEAL_HEALTH&dealId=${id}`}>Ask AI about this deal</Link><Link to="/pipeline">Pipeline board</Link></div></header>
     {error&&<p className="crm-error" role="alert">{error}</p>}{notice&&<p className="crm-notice" role="status">{notice}</p>}
     {!health&&!error&&<p role="status">Loading deal health…</p>}
     {deal&&health&&<>
